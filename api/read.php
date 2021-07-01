@@ -14,7 +14,7 @@
     $itemCount = $stmt->rowCount();
 
 
-    echo json_encode($itemCount);
+    //echo json_encode($itemCount);
 
     if($itemCount > 0){
         
@@ -26,6 +26,7 @@
             extract($row);
             $e = array(
                 
+                "id" => $id,
                 "title" => $title,
                 "description" => $description
                 
@@ -33,6 +34,7 @@
 
             array_push($tutorialArr["body"], $e);
         }
+        http_response_code(200);
         echo json_encode($tutorialArr);
     }
 

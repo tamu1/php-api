@@ -11,7 +11,11 @@
         public $id;
         public $title;
         public $description;
-    
+       // public $name;
+        //public $email;
+        //public $age;
+       // public $designation;
+        //public $created;
 
         // Db connection
         public function __construct($db){
@@ -20,7 +24,7 @@
 
         // GET ALL
         public function getTutorial(){
-            $sqlQuery = "SELECT id, title, description FROM " . $this->db_table . "";
+            $sqlQuery = "SELECT id,title,description FROM " . $this->db_table . "";
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
             return $stmt;
@@ -30,26 +34,25 @@
         public function createTutorials(){
             $sqlQuery = "INSERT INTO
                         ". $this->db_table ."
-                    SET
-                        id= :id, 
+                    SET 
                         title = :title, 
                         description = :description";
-                    
         
             $stmt = $this->conn->prepare($sqlQuery);
-            
         
             // sanitize
-           // $this->id=htmlspecialchars(strip_tags($this->id));
-            $this->title=htmlspecialchars(strip_tags($this->title));
-            $this->description=htmlspecialchars(strip_tags($this->description));
-            
+            $this->name=htmlspecialchars(strip_tags($this->title));
+            $this->email=htmlspecialchars(strip_tags($this->description));
+           // $this->age=htmlspecialchars(strip_tags($this->age));
+           // $this->designation=htmlspecialchars(strip_tags($this->designation));
+           // $this->created=htmlspecialchars(strip_tags($this->created));
         
             // bind data
-           // $stmt->bindParam(":id", $this->id);
             $stmt->bindParam(":title", $this->title);
             $stmt->bindParam(":description", $this->description);
-            
+            //$stmt->bindParam(":age", $this->age);
+            //$stmt->bindParam(":designation", $this->designation);
+            //$stmt->bindParam(":created", $this->created);
         
             if($stmt->execute()){
                return true;
@@ -57,12 +60,15 @@
             return false;
         }
 
-        // UPDATE
+        // READ single
         public function getSingleTutorial(){
             $sqlQuery = "SELECT
                         id, 
-                        title, 
+                        title,
                         description
+                         
+                         
+                        
                         
                       FROM
                         ". $this->db_table ."
@@ -73,16 +79,16 @@
             $stmt = $this->conn->prepare($sqlQuery);
 
             $stmt->bindParam(1, $this->id);
-            
 
             $stmt->execute();
 
             $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
             
-            $this->id = $dataRow['id'];
             $this->title = $dataRow['title'];
             $this->description = $dataRow['description'];
-            
+            //$this->age = $dataRow['age'];
+            //$this->designation = $dataRow['designation'];
+            //$this->created = $dataRow['created'];
         }        
 
         // UPDATE
@@ -90,24 +96,27 @@
             $sqlQuery = "UPDATE
                         ". $this->db_table ."
                     SET
-                        id= :id, 
                         title = :title, 
-                    description = :description, 
-                    
+                        description = :description 
+                
                     WHERE 
                         id = :id";
         
             $stmt = $this->conn->prepare($sqlQuery);
         
-            
-            $this->title=htmlspecialchars(strip_tags($this->title));
-            $this->description=htmlspecialchars(strip_tags($this->description));
+            $this->name=htmlspecialchars(strip_tags($this->title));
+            $this->email=htmlspecialchars(strip_tags($this->description));
+            //$this->age=htmlspecialchars(strip_tags($this->age));
+            //$this->designation=htmlspecialchars(strip_tags($this->designation));
+            //$this->created=htmlspecialchars(strip_tags($this->created));
             $this->id=htmlspecialchars(strip_tags($this->id));
         
             // bind data
             $stmt->bindParam(":title", $this->title);
             $stmt->bindParam(":description", $this->description);
-            
+            //$stmt->bindParam(":age", $this->age);
+            //$stmt->bindParam(":designation", $this->designation);
+           // $stmt->bindParam(":created", $this->created);
             $stmt->bindParam(":id", $this->id);
         
             if($stmt->execute()){
@@ -134,4 +143,3 @@
 
     }
 ?>
-

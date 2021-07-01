@@ -18,10 +18,10 @@
   
     $item->getSingleTutorial();
 
-    if($item->name != null){
+    if($item->id != null){
         // create array
         $tutorial_arr = array(
-            
+            "id"=> $item->id,
             "title" => $item->title,
             "description" => $item->description
             
